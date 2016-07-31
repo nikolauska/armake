@@ -31,6 +31,7 @@
 #include <windows.h>
 #endif
 
+#include "sort.h"
 #include "docopt.h"
 #include "filesystem.h"
 #include "utils.h"
@@ -39,7 +40,6 @@
 #include "vector.h"
 #include "matrix.h"
 #include "p3d.h"
-
 
 int read_lods(FILE *f_source, struct mlod_lod *mlod_lods, uint32_t num_lods) {
     /*
@@ -764,11 +764,7 @@ void convert_lod(struct mlod_lod *mlod_lod, struct odol_lod *odol_lod,
     }
 
     if (mlod_lod->num_faces > 1) {
-#if defined(HAVE_QSORT_R) && defined(__GLIBC__)
-        qsort_r(odol_lod->face_lookup, odol_lod->num_faces, sizeof(point_index), compare_face_lookup, (void *)mlod_lod->faces);
-#else
-        qsort_s(odol_lod->face_lookup, odol_lod->num_faces, sizeof(point_index), compare_face_lookup, (void *)mlod_lod->faces);
-#endif
+        sort_r(odol_lod->face_lookup, odol_lod->num_faces, sizeof(point_index), compare_face_lookup, (void *)mlod_lod->faces);
     }
 
     // Write face vertices
