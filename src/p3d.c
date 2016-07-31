@@ -764,10 +764,10 @@ void convert_lod(struct mlod_lod *mlod_lod, struct odol_lod *odol_lod,
     }
 
     if (mlod_lod->num_faces > 1) {
-#ifdef _WIN32
-        qsort_s(odol_lod->face_lookup, odol_lod->num_faces, sizeof(point_index), compare_face_lookup, (void *)mlod_lod->faces);
-#else
+#if defined(HAVE_QSORT_R) && defined(__GLIBC__)
         qsort_r(odol_lod->face_lookup, odol_lod->num_faces, sizeof(point_index), compare_face_lookup, (void *)mlod_lod->faces);
+#else
+        qsort_s(odol_lod->face_lookup, odol_lod->num_faces, sizeof(point_index), compare_face_lookup, (void *)mlod_lod->faces);
 #endif
     }
 
