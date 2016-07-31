@@ -31,7 +31,7 @@
 #include <windows.h>
 #endif
 
-#include "sort.h"
+#include "sort_r.h"
 #include "docopt.h"
 #include "filesystem.h"
 #include "utils.h"
